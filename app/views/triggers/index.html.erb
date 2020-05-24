@@ -1,0 +1,19 @@
+<h2>Listing Triggers</h2>
+
+<%= link_to 'New trigger', new_trigger_path %>
+
+<table>
+  <tr>
+    <th>Time</th>
+    <th>Message</th>
+    <th></th>
+  </tr>
+
+  <% @triggers.each do |trigger| %>
+    <tr>
+      <td><%= trigger.time %></td>
+      <td><%= trigger.message %></td>
+      <td><%= link_to 'Show', trigger_path(trigger) %></td>
+    </tr>
+  <% end %>
+</table>

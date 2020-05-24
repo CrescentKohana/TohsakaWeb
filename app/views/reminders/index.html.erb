@@ -1,0 +1,26 @@
+<h2>Listing Reminders</h2>
+
+<%= link_to 'New reminder', new_reminder_path %>
+
+<table>
+  <tr>
+    <th>Date / Time</th>
+    <th>Message</th>
+    <th>Channel</th>
+    <th>Repeat interval</th>
+  </tr>
+
+  <% @reminders.each do |reminder| %>
+    <tr>
+      <td><%= reminder.datetime %></td>
+      <td><%= reminder.message %></td>
+      <td><%= tohsaka_bridge.get_channel(reminder.channel).name %></td>
+      <td><%= reminder.repeat %></td>
+      <td><%= link_to 'Show', reminder_path(reminder) %></td>
+      <td><%= link_to 'Edit', edit_reminder_path(reminder) %></td>
+      <td><%= link_to 'Destroy', reminder_path(reminder),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>

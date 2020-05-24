@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TohsakaWeb</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+
+  <div id="header">
+
+    <div id="title"><%= link_to 'TohsakaWeb', "/" %></div>
+
+    <div id="nav">
+      <ul>
+        <% if logged_in? %>
+          <li><%= link_to 'Reminders', controller: 'reminders' %></li>
+        <% end %>
+        <!--<li><a href="#">Triggers (soon)</a></li>
+        <li><a href="#">Placeholder</a>
+          <ul>
+            <li><a href="#">Placeholder</a></li>
+            <li><a href="#">Placeholder</a></li>
+          </ul>
+        </li>-->
+      </ul>
+    </div>
+
+    <div id="auth">
+      <% if logged_in? %>
+        <div id="auth_inner">
+          <div id="auth_avatar">
+            <img src="<%= avatar_url(get_discord_id, get_avatar_hash) %>?size=128" alt="User avatar" width="64" height="64">
+          </div>
+          <div class="auth_child">
+            <span class="text_hide_parent"><%= get_name %><span class="text_hide">#<%= get_discriminator %></span></span><br>
+            <%= link_to "Logout", "/logout" %>
+          </div>
+        </div>
+
+      <% else %>
+        <div id="auth_inner">
+          <div id="auth_avatar">
+            <img src="<%= avatar_url(nil, nil) %>" alt="User avatar" width="64" height="64">
+          </div>
+          <div class="auth_child">
+            <span class="text_hide_parent">User<span class="text_hide">#0000</span></span><br>
+            <%= link_to "Login with Discord", "/auth/discord" %>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+
+  </div>
+
+  <div id="main">
+
+  <%= yield %>
+  </div>
+
+  <div id="footer">
+    Luukuton 2020 ・ Powered by Ruby on Rails 6.0.3.1
+  </div>
+
+  </body>
+</html>

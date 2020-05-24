@@ -1,0 +1,21 @@
+<p>
+  <strong>Datetime:</strong>
+  <%= @reminder.datetime %>
+</p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @reminder.message %>
+</p>
+
+<p>
+  <strong>Channel:</strong>
+  <%= tohsaka_bridge.get_channel(@reminder.channel).name %>
+</p>
+
+<p>
+  <strong>Repeat interval (0 for none):</strong>
+  <%= @reminder.repeat %>
+</p>
+
+<%= link_to 'Back', reminders_path %>
