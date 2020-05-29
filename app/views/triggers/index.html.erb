@@ -1,6 +1,6 @@
 <h1>Triggers</h1>
 <h3><%= link_to 'New trigger', new_trigger_path %></h3>
-
+<p>First value of options is the chance of the trigger and the second is the mode: normal/any/regex. </p>
 <div class="rTable">
   <div class="rTableBody">
     <div class="rTableRow label">
@@ -12,18 +12,24 @@
 
     <% @triggers.each do |trigger| %>
       <div class="rTableRow">
-        <div class="rTableCell item"><%= trigger.phrase %></div>
+        <div style="width: 140px;" class="rTableCell item"><%= trigger.phrase %></div>
         <div class="rTableCell item">
           <%= file = File.basename(trigger.file.to_s)
               if trigger.reply.blank?
-                "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://rin.luukuton.fi/td/#{file}\">#{file}</a>".html_safe
+                "<a
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href='https://rin.luukuton.fi/td/#{file}'>
+                    #{file}
+                </a>".html_safe
               else
                 trigger.reply
               end %>
         </div>
         <div class="rTableCell item"><%= (trigger.chance == 0 ? tohsaka_bridge.get_def_trigger_chance(trigger.mode) : trigger.chance).to_s + " % " + (trigger.mode == 0 ? "normal" : "any") %></div>
-        <div class="rTableCell">
+        <div style="width: 140px;" class="rTableCell">
           <%= link_to 'Show', trigger_path(trigger) %>
+          <%= link_to 'Edit', edit_trigger_path(trigger) %>
           <%= link_to 'Destroy', trigger_path(trigger), method: :delete, data: { confirm: 'Are you sure?' } %>
         </div>
       </div>

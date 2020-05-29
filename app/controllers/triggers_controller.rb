@@ -19,8 +19,7 @@ class TriggersController < ApplicationController
   end
 
   def edit
-    redirect_to root_path
-    return #unless redirect_if_anonymous
+    return unless redirect_if_anonymous
     return unless permission?(params[:id])
     @trigger = Trigger.find(params[:id])
   end
@@ -41,12 +40,27 @@ class TriggersController < ApplicationController
   end
 
   def update
-    redirect_to root_path
-    return #unless redirect_if_anonymous
+    return unless redirect_if_anonymous
     return unless permission?(params[:id])
     @trigger = Trigger.find(params[:id])
+    file = @trigger[:file]
+    new_file = false
+    new_reply = false
+
+    if trigger_params[:file].blank? && !trigger_params[:reply].blank?
+      @trigger[:file] = ""
+      new_reply = true
+    elsif trigger_params[:reply].blank? && !trigger_params[:file].blank?
+      @trigger[:reply] = ""
+      new_file = true
+    end
 
     if @trigger.update(trigger_params)
+      # If there was a new file, save it.
+      tohsaka_bridge.save_trigger_file(@trigger.file.current_path, @trigger.file.filename) if new_file
+      # If there was (a new file OR a reply) AND there was a previous file, remove the previous file.
+      File.delete(Rails.configuration.tohsaka_bot_root + "/triggers/#{file}") if (new_file || new_reply) && !file.nil?
+
       redirect_to @trigger
     else
       render 'edit'
