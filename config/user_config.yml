@@ -1,4 +1,0 @@
-# Domain where the site exists. For example: rin.domain.com
-web_host: ''
-# TohsakaBot's root folder. For example: /home/rin/TohsakaBot
-tohsaka_bot_root: ''

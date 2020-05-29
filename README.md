@@ -9,21 +9,20 @@ A Ruby on Rails web application which is designed to work with [TohsakaBot](http
 * Gems specified in Gemfile
 
 ## Usage
-Install everything by running 
-```
-bundle install
-```
+1. Install everything by running 
 
-Enter the webhost (eg. rin.domain.com)and path to TohsakaBot (eg. /home/rin/TohsakaBot) to [config/user_config.yml](config/user_config.yml).
-
-Enter credentials to Discord and SQL database to config/credentials.ymc.enc by typing this command: 
-```
-EDITOR="nano" rails credentials:edit
-```
-
-Setup NGINX. Example config with SSL for TohsakaWeb [here](documentation/tohsakaweb_nginx.conf).
-
-The app can be started by 
-```
-bundle exec puma -b unix://tmp/sockets/server.sock
-```
+   ```
+   bundle install
+   ```
+2. Enter the webhost (eg. rin.domain.com)and path to TohsakaBot (eg. /home/rin/TohsakaBot) to [config/user_config.yml](config/user_config.yml).
+3. Enter credentials to Discord and SQL database to config/credentials.ymc.enc by typing this command: 
+   
+   ```
+   EDITOR="nano" rails credentials:edit
+   ```
+4. Setup NGINX. Example config with SSL for TohsakaWeb [here](documentation/tohsakaweb_nginx.conf).
+5. The app can be started by 
+   
+   ```
+   bundle exec puma -b unix://tmp/sockets/server.sock
+   ```
