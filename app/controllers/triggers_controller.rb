@@ -31,9 +31,9 @@ class TriggersController < ApplicationController
     @trigger.user_id = get_user_id
     @trigger.chance = 0
 
-    if @trigger.save!
-      # Pass the file to TohsakaBot
-      tohsaka_bridge.save_trigger_file(@trigger.file.current_path, @trigger.file.filename)
+    if @trigger.save
+      # Pass the file to TohsakaBot if there's one
+      tohsaka_bridge.save_trigger_file(@trigger.file.current_path, @trigger.file.filename) if @trigger.reply.blank?
       redirect_to @trigger
     else
       render 'new'
@@ -57,7 +57,10 @@ class TriggersController < ApplicationController
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
     @trigger = Trigger.find(params[:id])
-    @trigger.destroy
+    file = @trigger[:file]
+    if @trigger.destroy
+      File.delete(Rails.configuration.x.tohsaka_bot_root + "/triggers/#{file}")
+    end
 
     redirect_to triggers_path
   end
