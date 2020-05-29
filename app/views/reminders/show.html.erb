@@ -1,21 +1,23 @@
 <p>
-  <strong>Datetime:</strong>
+  <b>Datetime:</b>
   <%= @reminder.datetime %>
 </p>
 
 <p>
-  <strong>Message:</strong>
+  <b>Message:</b>
   <%= @reminder.message %>
 </p>
 
 <p>
-  <strong>Channel:</strong>
+  <b>Channel:</b>
   <%= tohsaka_bridge.get_channel(@reminder.channel).name %>
 </p>
 
+<% if @reminder.repeat > 0 %>
 <p>
-  <strong>Repeat interval (0 for none):</strong>
-  <%= @reminder.repeat %>
+  <b>Repeat:</b>
+  <%= distance_of_time_in_words(@reminder.repeat) %>
 </p>
+<% end %>
 
 <%= link_to 'Back', reminders_path %>

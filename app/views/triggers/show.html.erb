@@ -1,11 +1,31 @@
 <p>
-  <strong>Time:</strong>
-  <%= @reminder.time %>
+  <strong>Phrase:</strong>
+  <%= @trigger.phrase %>
 </p>
 
 <p>
-  <strong>Message:</strong>
-  <%= @reminder.message %>
+  <strong>Reply:</strong>
+  <%= @trigger.reply %>
 </p>
 
-<%= link_to 'Back', reminders_path %>
+<p>
+  <strong>Filename:</strong>
+  <%= File.basename(@trigger.file.to_s) %>
+</p>
+
+<p>
+  <strong>Chance:</strong>
+  <%= (@trigger.chance == 0 ? tohsaka_bridge.get_def_trigger_chance(trigger.mode) : @trigger.chance).to_s + " %" %>
+</p>
+
+<p>
+  <strong>Mode:</strong>
+  <%= (@trigger.mode == 0 ? "normal" : "any") %>
+</p>
+
+<p>
+  <strong>Server:</strong>
+  <%= "#{tohsaka_bridge.get_server(@trigger.server_id).name} (#{@trigger.server_id})"  %>
+</p>
+
+<%= link_to 'Back', triggers_path %>
