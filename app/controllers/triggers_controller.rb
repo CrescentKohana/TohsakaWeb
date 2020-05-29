@@ -1,6 +1,7 @@
 require 'simple_form'
 
 class TriggersController < ApplicationController
+  before_action :tohsakabot_online
 
   def index
     return unless redirect_if_anonymous
@@ -118,5 +119,5 @@ class TriggersController < ApplicationController
     end
   end
 
-  helper_method :choosable_serversm, :mode_in_words
+  helper_method :choosable_servers, :mode_in_words
 end
