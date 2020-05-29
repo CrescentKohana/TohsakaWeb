@@ -1,4 +1,10 @@
 <p>
+  <b>ID:</b>
+  <%= @trigger.id %>
+</p>
+
+
+<p>
   <strong>Phrase:</strong>
   <%= @trigger.phrase %>
 </p>
@@ -15,7 +21,7 @@
 
 <p>
   <strong>Chance:</strong>
-  <%= (@trigger.chance == 0 ? tohsaka_bridge.get_def_trigger_chance(trigger.mode) : @trigger.chance).to_s + " %" %>
+  <%= (@trigger.chance == 0 ? tohsaka_bridge.get_def_trigger_chance(@trigger.mode) : @trigger.chance).to_s + " %" %>
 </p>
 
 <p>
