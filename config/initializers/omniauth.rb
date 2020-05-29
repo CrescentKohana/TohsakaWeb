@@ -2,8 +2,8 @@ require 'omniauth-discord'
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :discord,
-           ENV['DISCORD_CLIENT_ID'],
-           ENV['DISCORD_CLIENT_SECRET'],
+           Rails.application.credentials.dig(:discord, :client_id),
+           Rails.application.credentials.dig(:discord, :secret),
            scope: 'identify',
            callback_url: 'http://localhost:3000/auth/discord/callback'
 end

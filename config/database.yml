@@ -8,17 +8,14 @@ default: &default
   adapter: mysql2
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-
-#development:
-#  <<: *default
-#  database: db/development.sqlite3
+  host: localhost
+  username: <%= Rails.application.credentials.dig(:mysql, :username) %>
+  password: <%= Rails.application.credentials.dig(:mysql, :password) %>
 
 development:
   <<: *default
   database: tohsaka
-  username: rin
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: localhost
+ # database: db/development.sqlite3
  # socket: /tmp/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
