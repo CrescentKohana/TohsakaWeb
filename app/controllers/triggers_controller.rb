@@ -59,7 +59,7 @@ class TriggersController < ApplicationController
     @trigger = Trigger.find(params[:id])
     file = @trigger[:file]
     if @trigger.destroy
-      File.delete(Rails.configuration.x.tohsaka_bot_root + "/triggers/#{file}")
+      File.delete(Rails.configuration.tohsaka_bot_root + "/triggers/#{file}")
     end
 
     redirect_to triggers_path
