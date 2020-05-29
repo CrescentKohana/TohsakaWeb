@@ -107,5 +107,16 @@ class TriggersController < ApplicationController
     possible_servers
   end
 
-  helper_method :choosable_servers
+  def mode_in_words(mode_id)
+    case mode_id.to_i
+    when 1
+      return "any"
+    when 2
+      return "regex"
+    else
+      return "normal"
+    end
+  end
+
+  helper_method :choosable_serversm, :mode_in_words
 end

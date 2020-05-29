@@ -26,7 +26,14 @@
                 trigger.reply
               end %>
         </div>
-        <div class="rTableCell item"><%= (trigger.chance == 0 ? tohsaka_bridge.get_def_trigger_chance(trigger.mode) : trigger.chance).to_s + " % " + (trigger.mode == 0 ? "normal" : "any") %></div>
+        <div style="width: 100px;" class="rTableCell item">
+          <%= if trigger.chance == 0
+                tohsaka_bridge.get_def_trigger_chance(trigger.mode).to_s + "% "
+              else
+                trigger.chance.to_s + "% "
+              end %>
+          <%= mode_in_words(trigger.mode) %>
+        </div>
         <div style="width: 140px;" class="rTableCell">
           <%= link_to 'Show', trigger_path(trigger) %>
           <%= link_to 'Edit', edit_trigger_path(trigger) %>

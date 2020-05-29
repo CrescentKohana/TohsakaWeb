@@ -6,6 +6,7 @@
 <p>
   <b>Datetime:</b>
   <%= @reminder.datetime %>
+  <%= ("(every " + distance_of_time_in_words(@reminder.repeat) + ")") if @reminder.repeat > 0 %>
 </p>
 
 <p>
