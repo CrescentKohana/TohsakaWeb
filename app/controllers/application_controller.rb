@@ -3,9 +3,19 @@ require 'faraday'
 
 class ApplicationController < ActionController::Base
   private
-
   def tohsaka_bridge
-    DRbObject.new_with_uri(SERVER_URI)
+    connection = DRbObject.new_with_uri(SERVER_URI)
+    connection if connection.online?
+  rescue
+    :offline
+  end
+
+  def tohsakabot_online(home = false)
+    if tohsaka_bridge == :offline
+      redirect_to root_path unless home
+      return false
+    end
+    true
   end
 
   def avatar_url(discord_id, avatar_hash)
@@ -57,6 +67,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :tohsaka_bridge,
+                :tohsakabot_online,
                 :avatar_url,
                 :get_name,
                 :get_discriminator,
