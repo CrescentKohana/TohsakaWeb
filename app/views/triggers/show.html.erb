@@ -3,14 +3,30 @@
   <%= @trigger.id %>
 </p>
 
-
 <p>
-  <strong>Phrase:</strong>
-  <%= @trigger.phrase %>
+  <b>Options:</b>
+  <%= if @trigger.chance == 0
+        tohsaka_bridge.get_def_trigger_chance(@trigger.mode).to_s + "% "
+      else
+        @trigger.chance.to_s + "% "
+      end %>
+  <%= mode_in_words(@trigger.mode) %>
 </p>
 
 <p>
-  <strong>Reply / Filename:</strong>
+  <b>Server (ID):</b>
+  <%= "#{tohsaka_bridge.get_server(@trigger.server_id).name} (#{@trigger.server_id})"  %>
+</p>
+
+
+
+<p>
+  <b>Phrase:</b>
+  <%= @trigger.phrase %>
+</p>
+
+<b>Reply / Filename:</b>
+<span style="white-space:pre-line">
   <%= file = File.basename(@trigger.file.to_s)
       if @trigger.reply.blank?
         "<a
@@ -22,21 +38,7 @@
       else
         @trigger.reply
       end %>
-</p>
-
-<p>
-  <strong>Chance:</strong>
-  <%= (@trigger.chance == 0 ? tohsaka_bridge.get_def_trigger_chance(@trigger.mode) : @trigger.chance).to_s + " %" %>
-</p>
-
-<p>
-  <strong>Mode:</strong>
-  <%= (@trigger.mode == 0 ? "normal" : "any") %>
-</p>
-
-<p>
-  <strong>Server:</strong>
-  <%= "#{tohsaka_bridge.get_server(@trigger.server_id).name} (#{@trigger.server_id})"  %>
-</p>
+</span>
+<br>
 
 <%= link_to 'Back', triggers_path %>
