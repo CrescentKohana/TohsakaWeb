@@ -15,8 +15,9 @@
         <div class="rTableCell item"><%= reminder.datetime.to_s + (reminder.repeat != 0 ? " (every #{distance_of_time_in_words(reminder.repeat)})" : "") %></div>
         <div class="rTableCell item"><%= reminder.message %></div>
         <div class="rTableCell item"><%= tohsaka_bridge.get_channel(reminder.channel).name  %></div>
-        <div class="rTableCell">
+        <div style="width: 140px;" class="rTableCell">
           <%= link_to 'Show', reminder_path(reminder) %>
+          <%= link_to 'Edit', edit_reminder_path(reminder) %>
           <%= link_to 'Destroy', reminder_path(reminder), method: :delete, data: { confirm: 'Are you sure?' } %>
         </div>
       </div>
