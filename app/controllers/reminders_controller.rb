@@ -1,7 +1,6 @@
 require 'simple_form'
 
 class RemindersController < ApplicationController
-
   def index
     return unless redirect_if_anonymous
     @reminders = Reminder.where(:user_id => get_user_id)

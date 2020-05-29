@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Nokogiri fix
-gem 'nokogiri', '~> 1.11.0.rc2'
+gem 'nokogiri'
 
 # Discord OAuthg
 gem 'omniauth'
@@ -17,7 +17,11 @@ gem 'simple_form'
 # MariaDB
 gem 'mysql2'
 
+# Hamburger menus
 gem 'hamburgers'
+
+# File handling
+gem 'carrierwave'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.1'

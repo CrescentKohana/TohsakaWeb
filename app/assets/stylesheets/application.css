@@ -176,3 +176,49 @@ a:hover {
 .text_hide_parent:hover .text_hide {
     display: inline;
 }
+
+/* Listing */
+
+.label {
+    text-align: left;
+    color: #8e0a2d;
+}
+
+.item {
+    padding: 5px 15px 5px 0;
+    word-break: break-word;
+}
+
+.edit-element {
+    display: inline-block;
+    margin: 5px 10px 0 0;
+}
+
+.rTable {
+    width: 100%;
+    display: table;
+    word-break: keep-all;
+}
+
+.rTableRow {
+    display: table-row;
+}
+
+.rTableHead {
+    font-size: 1.2em;
+    display: table-cell;
+    padding: 0 10px 10px 0;
+}
+
+.rTableCell {
+    display: table-cell;
+    border-top: 1px solid #8e0a2d;
+}
+
+.rTableHeading, .rTableFoot, .rTableHeading {
+    display: table-header-group;
+}
+
+.rTableBody {
+    display: table-row-group;
+}

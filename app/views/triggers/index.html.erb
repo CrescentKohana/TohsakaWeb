@@ -1,19 +1,24 @@
-<h2>Listing Triggers</h2>
+<h1>Triggers</h1>
 
-<%= link_to 'New trigger', new_trigger_path %>
+<div class="rTable">
+  <div class="rTableBody">
+    <div class="rTableRow label">
+      <div class="rTableHead">Phrase</div>
+      <div class="rTableHead">Reply / File</div>
+      <div class="rTableHead">Options</div>
+      <div class="rTableHead">Actions</div>
+    </div>
 
-<table>
-  <tr>
-    <th>Time</th>
-    <th>Message</th>
-    <th></th>
-  </tr>
-
-  <% @triggers.each do |trigger| %>
-    <tr>
-      <td><%= trigger.time %></td>
-      <td><%= trigger.message %></td>
-      <td><%= link_to 'Show', trigger_path(trigger) %></td>
-    </tr>
-  <% end %>
-</table>
+    <% @triggers.each do |trigger| %>
+      <div class="rTableRow">
+        <div class="rTableCell item"><%= trigger.phrase %></div>
+        <div class="rTableCell item"><%= trigger.reply.blank? ? File.basename(trigger.file.to_s) : trigger.reply %></div>
+        <div class="rTableCell item"><%= (trigger.chance == 0 ? tohsaka_bridge.get_def_trigger_chance(trigger.mode) : trigger.chance).to_s + " % " + (trigger.mode == 0 ? "normal" : "any") %></div>
+        <div class="rTableCell">
+          <%= link_to 'Show', trigger_path(trigger) %>
+          <%= link_to 'Destroy', trigger_path(trigger), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
