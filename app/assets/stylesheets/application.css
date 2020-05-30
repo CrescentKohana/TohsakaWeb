@@ -146,6 +146,8 @@ b {
     margin: 50px 10% 0 10%;
     min-height: 50vh;
     position: relative;
+    background-color: #efefef;
+    padding: 20px;
 }
 
 #footer {
@@ -182,6 +184,7 @@ a:hover {
 .label {
     text-align: left;
     color: #8e0a2d;
+    border-bottom: 1px solid #8e0a2d;
 }
 
 .item {
@@ -198,6 +201,7 @@ a:hover {
     width: 100%;
     display: table;
     word-break: keep-all;
+    border-collapse: collapse;
 }
 
 .rTableRow {
@@ -212,7 +216,18 @@ a:hover {
 
 .rTableCell {
     display: table-cell;
-    border-top: 1px solid #8e0a2d;
+    border: none;
+}
+
+.rTableCell:nth-child(1) {
+    padding-left: 5px;
+}
+.rTableCell:nth-child(4) {
+    padding-right: 5px;
+}
+
+.rTableRow:nth-child(even) {
+    background-color: #e3e3e3;
 }
 
 .rTableHeading, .rTableFoot, .rTableHeading {
