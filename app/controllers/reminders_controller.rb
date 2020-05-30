@@ -50,7 +50,6 @@ class RemindersController < ApplicationController
     end
   end
 
-
   def destroy
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
