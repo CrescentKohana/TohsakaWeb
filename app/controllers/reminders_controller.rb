@@ -31,6 +31,11 @@ class RemindersController < ApplicationController
     @reminder = Reminder.new(reminder_params)
     @reminder[:user_id] = get_user_id
 
+    days = reminder_params[:repeat_day].to_i
+    hours = reminder_params[:repeat_hour].to_i
+    minutes = reminder_params[:repeat_min].to_i
+    @reminder[:repeat] = (minutes * 60) + (hours * 60 * 60) + (days * 24 * 60 * 60)
+
     if @reminder.save
       redirect_to @reminder
     else
@@ -61,7 +66,7 @@ class RemindersController < ApplicationController
 
   private
   def reminder_params
-    params.require(:reminder).permit(:datetime, :message, :channel, :repeat)
+    params.require(:reminder).permit(:datetime, :message, :channel, :repeat, :repeat_day, :repeat_hour, :repeat_min)
   end
 
   def permission?(reminder_id)
@@ -74,7 +79,7 @@ class RemindersController < ApplicationController
     return nil if discord_uid.nil?
     possible_channels = Hash.new
     tohsaka_bridge.channels_user_has_rights_to(discord_uid).each do |c|
-      possible_channels[c.id] = c.name
+      possible_channels[c.id] = tohsaka_bridge.is_pm?(c.id) ? "!Private Message Channel" : c.name
     end
 
     possible_channels
