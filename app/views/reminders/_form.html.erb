@@ -23,9 +23,9 @@
               :label_method => :second,
               :value_method => :first %>
   <b>Repeat interval </b>
-  <%= f.input :repeat_day, as: :integer, :label => 'Days'%>
-  <%= f.input :repeat_hour, as: :integer, :label => 'Hours'%>
-  <%= f.input :repeat_min, as: :integer, :label => 'Minutes'%>
+  <%= f.input :repeat_day, as: :integer, :label => 'Days', input_html: { min: '0' } %>
+  <%= f.input :repeat_hour, as: :integer, :label => 'Hours', input_html: { min: '0' }%>
+  <%= f.input :repeat_min, as: :integer, :label => 'Minutes', input_html: { min: '0' }%>
 
   <%= f.button :submit %>
 <% end %>
