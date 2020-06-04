@@ -23,6 +23,14 @@ class RemindersController < ApplicationController
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
     @reminder = Reminder.find(params[:id])
+
+    duration = @reminder[:repeat]
+
+    if duration.to_i > 0
+      @reminder.repeat_min = minutes = (duration / 60) % 60
+      @reminder.repeat_hour = hours = duration % (60 * 60)
+      @reminder.repeat_day = (duration - minutes - hours) / (60 * 60 * 24)
+    end
   end
 
   def create
@@ -47,6 +55,12 @@ class RemindersController < ApplicationController
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
     @reminder = Reminder.find(params[:id])
+
+    days = reminder_params[:repeat_day].to_i
+    hours = reminder_params[:repeat_hour].to_i
+    minutes = reminder_params[:repeat_min].to_i
+    new_repeat = (minutes * 60) + (hours * 60 * 60) + (days * 24 * 60 * 60)
+    @reminder[:repeat] = new_repeat if new_repeat > 0
 
     if @reminder.update(reminder_params)
       redirect_to @reminder
