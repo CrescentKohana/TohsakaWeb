@@ -60,7 +60,7 @@ class RemindersController < ApplicationController
     hours = reminder_params[:repeat_hour].to_i
     minutes = reminder_params[:repeat_min].to_i
     new_repeat = (minutes * 60) + (hours * 60 * 60) + (days * 24 * 60 * 60)
-    @reminder[:repeat] = new_repeat if new_repeat > 0
+    @reminder[:repeat] = new_repeat
 
     if @reminder.update(reminder_params)
       redirect_to @reminder
