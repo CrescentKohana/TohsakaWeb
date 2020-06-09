@@ -1,3 +1,4 @@
+// Forms
 .simple_form {
   div.input {
     margin-bottom: 10px;
@@ -23,10 +24,8 @@ div.boolean label {
 
 label.collection_radio_buttons {
   float: none;
-  margin: 0;
-  margin-right: 10px;
   vertical-align: -2px;
-  margin-left: 2px;
+  margin: 0 10px 0 2px;
 }
 
 .field_with_errors {
@@ -62,7 +61,6 @@ input {
 
 label.collection_check_boxes {
   float: none;
-  margin: 0;
   vertical-align: -2px;
-  margin-left: 2px;
+  margin: 0 0 0 2px;
 }

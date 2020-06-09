@@ -6,14 +6,13 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "application_#{current_theme}", media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
 
   <div id="header">
     <div id="title"><%= link_to 'TohsakaWeb', "/" %></div>
-
     <div id="nav">
       <ul>
         <% if logged_in? %>
@@ -22,7 +21,6 @@
         <% end %>
       </ul>
     </div>
-
     <div id="auth">
       <% if logged_in? %>
         <div id="auth_inner">
