@@ -17,7 +17,7 @@
   <%= f.input :phrase %>
   <%= f.input :reply %>
   <%= f.input :file, as: :file %>
-  <%= f.collection_radio_buttons :mode, [[0, 'Normal'], [1, 'Any']], :first, :last %>
+  <%= f.collection_radio_buttons :mode, [[0, 'Exact'], [1, 'Any']], :first, :last %>
   <%= f.input :server_id,
               :label => "Server",
               collection: choosable_servers(get_discord_id),
