@@ -4,7 +4,7 @@ A Ruby on Rails web application which is designed to work with [TohsakaBot](http
 ## Dependencies
 * Webserver (NGINX recommended)
 * Ruby >= 2.7 supported
-* Node.js (tested 14.3.0) and Yarn (tested 1.22.4) for Rails
+* Node.js (tested 14.5.0) and Yarn (tested 1.22.4) for Rails
 * libmysqlclient-dev
 * Gems specified in Gemfile
 
