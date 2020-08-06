@@ -115,7 +115,7 @@ class TriggersController < ApplicationController
     when 2
       return "regex"
     else
-      return "normal"
+      return "exact"
     end
   end
 
