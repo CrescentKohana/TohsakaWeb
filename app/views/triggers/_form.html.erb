@@ -18,6 +18,7 @@
   <%= f.input :reply %>
   <%= f.input :file, as: :file %>
   <%= f.collection_radio_buttons :mode, [[0, 'Exact'], [1, 'Any']], :first, :last %>
+  <%= f.input :chance, as: :integer, input_html: { min: '0', max: '100' }, disabled: !is_owner? %>
   <%= f.input :server_id,
               :label => "Server",
               collection: choosable_servers(get_discord_id),

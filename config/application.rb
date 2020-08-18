@@ -22,6 +22,7 @@ module TohsakaWeb
       cfg = YAML::load_file(File.join(path))
       config.hosts << cfg['web_host']
       config.tohsaka_bot_root = cfg['tohsaka_bot_root']
+      config.owner_id = cfg['owner_id'].to_i
     end
   end
 end

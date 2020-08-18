@@ -2,3 +2,5 @@
 web_host: ''
 # TohsakaBot's root folder. For example: /home/rin/TohsakaBot
 tohsaka_bot_root: ''
+# Owner Discord ID
+owner_id: ''
