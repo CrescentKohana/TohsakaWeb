@@ -58,6 +58,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
+  def is_owner?
+    Rails.configuration.owner_id == get_discord_id.to_i
+  end
+
   def redirect_if_anonymous
     unless logged_in?
       redirect_to root_path
@@ -76,5 +80,6 @@ class ApplicationController < ActionController::Base
                 :get_user_id,
                 :get_locale,
                 :logged_in?,
+                :is_owner?,
                 :redirect_if_anonymous
 end

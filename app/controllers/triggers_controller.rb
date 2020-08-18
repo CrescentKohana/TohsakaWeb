@@ -56,10 +56,14 @@ class TriggersController < ApplicationController
       new_file = true
     end
 
-    if @trigger.update(trigger_params)
-      # If there was a new file, save it.
+    # If the user isn't the owner, don't allow any changes to the chance.
+    trigger_params_with_chance = trigger_params
+    trigger_params_with_chance[:chance] = @trigger[:chance] unless is_owner?
+
+    if @trigger.update(trigger_params_with_chance)
+      # If there is a new file, save it.
       tohsaka_bridge.save_trigger_file(@trigger.file.current_path, @trigger.file.filename) if new_file
-      # If there was (a new file OR a reply) AND there was a previous file, remove the previous file.
+      # If there is (a new file OR a reply) AND there is a previous file, remove the previous file.
       File.delete(Rails.configuration.tohsaka_bot_root + "/data/triggers/#{file}") if (new_file || new_reply) && !file.blank?
 
       redirect_to @trigger
@@ -82,7 +86,7 @@ class TriggersController < ApplicationController
 
   private
   def trigger_params
-    params.require(:trigger).permit(:phrase, :reply, :server_id, :mode, :file)
+    params.require(:trigger).permit(:phrase, :reply, :server_id, :mode, :file, :chance)
   end
 
   def upload_file(file)
