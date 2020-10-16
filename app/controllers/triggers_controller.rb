@@ -34,6 +34,7 @@ class TriggersController < ApplicationController
     if @trigger.save
       # Pass the file to TohsakaBot if there's one
       tohsaka_bridge.save_trigger_file(@trigger.file.current_path, @trigger.file.filename) if @trigger.reply.blank?
+      tohsaka_bridge.reload_triggers
       redirect_to @trigger
     else
       render 'new'
@@ -66,6 +67,7 @@ class TriggersController < ApplicationController
       # If there is (a new file OR a reply) AND there is a previous file, remove the previous file.
       File.delete(Rails.configuration.tohsaka_bot_root + "/data/triggers/#{file}") if (new_file || new_reply) && !file.blank?
 
+      tohsaka_bridge.reload_triggers
       redirect_to @trigger
     else
       render 'edit'
@@ -81,6 +83,7 @@ class TriggersController < ApplicationController
       File.delete(Rails.configuration.tohsaka_bot_root + "/data/triggers/#{file}") unless file.blank?
     end
 
+    tohsaka_bridge.reload_triggers
     redirect_to triggers_path
   end
 
