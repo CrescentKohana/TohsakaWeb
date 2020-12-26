@@ -1,0 +1,24 @@
+<h1>Highlights</h1>
+
+<div class="rTable">
+  <div class="rTableBody">
+    <div class="rTableRow label">
+      <div class="rTableHead">Message</div>
+      <div class="rTableHead">Attachments</div>
+      <div class="rTableHead">User</div>
+      <div class="rTableHead">Timestamp</div>
+      <div class="rTableHead">Channel / Server</div>
+    </div>
+
+    <% @highlights.where.not(deleted: true).order(:timestamp).each do |highlight| %>
+      <div class="rTableRow">
+        <div class="rTableCell item"><%= highlight.content %></div>
+        <div class="rTableCell item"><%= highlight.attachments %></div>
+        <div class="rTableCell item"><%= highlight.author_id %></div>
+        <div class="rTableCell item"><%= highlight.timestamp %></div>
+        <div class="rTableCell item"><%= highlight.channel %> <%= highlight.server %></div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<br>
