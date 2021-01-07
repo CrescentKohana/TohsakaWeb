@@ -8,6 +8,14 @@ class SessionsController < ApplicationController
 
       @authorization = Authorization.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
       if @authorization
+        user = User.find(@authorization.user.id)
+        user.update(
+          :name => auth_hash["extra"]["raw_info"]["username"],
+          :discriminator => auth_hash["extra"]["raw_info"]["discriminator"],
+          :avatar => auth_hash["extra"]["raw_info"]["avatar"],
+          :locale => auth_hash["extra"]["raw_info"]["locale"]
+        )
+
         session[:user_id] = @authorization.user.id
         session[:uid] = @authorization.uid
         session[:name] = @authorization.user.name
@@ -15,7 +23,7 @@ class SessionsController < ApplicationController
         session[:avatar] = @authorization.user.avatar
         session[:locale] = @authorization.user.locale
 
-        flash[:notice] = "Welcome back #{@authorization.user.name}! You've already signed up."
+        flash[:notice] = "You've already signed up. Welcome back #{@authorization.user.name}!"
       else
         unless tohsaka_bridge.share_server_with_bot?(auth_hash["uid"])
           flash[:warning] = "This Discord account doesn't share any servers with the host bot."
