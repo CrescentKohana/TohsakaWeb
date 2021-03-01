@@ -29,7 +29,7 @@ class TriggersController < ApplicationController
     return unless redirect_if_anonymous
     @trigger = Trigger.new(trigger_params)
     @trigger.user_id = get_user_id
-    @trigger.chance = 0
+    @trigger.chance = 0 if permissions?(100)
 
     if @trigger.save
       # Pass the file to TohsakaBot if there's one
@@ -57,9 +57,9 @@ class TriggersController < ApplicationController
       new_file = true
     end
 
-    # If the user isn't the owner, don't allow any changes to the chance.
+    # Permissions of 100 required to change the chance
     trigger_params_with_chance = trigger_params
-    trigger_params_with_chance[:chance] = @trigger[:chance] unless is_owner?
+    trigger_params_with_chance[:chance] = @trigger[:chance] unless permissions?(100)
 
     if @trigger.update(trigger_params_with_chance)
       # If there is a new file, save it.

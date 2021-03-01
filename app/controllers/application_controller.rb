@@ -58,6 +58,12 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
+  def permissions?(level)
+    puts level
+    puts session[:permissions]
+    session[:permissions].to_i >= level.to_i
+  end
+
   def is_owner?
     Rails.configuration.owner_id == get_discord_id.to_i
   end
@@ -80,6 +86,7 @@ class ApplicationController < ActionController::Base
                 :get_user_id,
                 :get_locale,
                 :logged_in?,
+                :permissions?,
                 :is_owner?,
                 :redirect_if_anonymous
 end
