@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
         session[:discriminator] = @authorization.user.discriminator
         session[:avatar] = @authorization.user.avatar
         session[:locale] = @authorization.user.locale
+        session[:permissions] = @authorization.user.permissions
 
         flash[:notice] = "You've already signed up. Welcome back #{@authorization.user.name}!"
       else
@@ -45,6 +46,7 @@ class SessionsController < ApplicationController
         session[:discriminator] = user.discriminator
         session[:avatar] = user.avatar
         session[:locale] = user.locale
+        session[:permissions] = 0
 
         flash[:notice] = "Welcome #{user.name}! You've signed up."
       end
