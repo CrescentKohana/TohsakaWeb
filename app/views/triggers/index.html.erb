@@ -1,12 +1,13 @@
 <h1>Triggers</h1>
 <h3><%= link_to 'Create a new trigger', new_trigger_path %></h3>
-<p>First value of options is the chance of the trigger and the second is the mode: exact/any/regex. </p>
+<p>First value of options is the chance of the trigger and the second is the mode: exact/any/regex.</p>
 <div class="rTable">
   <div class="rTableBody">
     <div class="rTableRow label">
       <div class="rTableHead">Phrase</div>
       <div class="rTableHead">Reply / File</div>
       <div class="rTableHead">Options</div>
+      <div class="rTableHead">Occurences + Calls</div>
       <div class="rTableHead">Actions</div>
     </div>
 
@@ -33,6 +34,9 @@
                 trigger.chance.to_s + "% "
               end %>
           <%= mode_in_words(trigger.mode) %>
+        </div>
+        <div style="width: 50px;" class="rTableCell item">
+          <%= trigger.occurences %> + <%= trigger.calls %>
         </div>
         <div style="width: 140px;" class="rTableCell item">
           <%= link_to 'Show', trigger_path(trigger) %>

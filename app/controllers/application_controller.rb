@@ -59,8 +59,6 @@ class ApplicationController < ActionController::Base
   end
 
   def permissions?(level)
-    puts level
-    puts session[:permissions]
     session[:permissions].to_i >= level.to_i
   end
 
