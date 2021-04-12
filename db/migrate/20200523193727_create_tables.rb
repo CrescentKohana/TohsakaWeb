@@ -22,7 +22,7 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.datetime :datetime, null: false
       t.text :message, null: true
       t.bigint :user_id, null: false
-      t.bigint :channel, null: true
+      t.bigint :channel_id, null: true
       t.bigint :repeat, default: 0
       t.bigint :parent, null: true
 
@@ -50,8 +50,8 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.bigint :author_id, null: false
       t.datetime :timestamp, null: false
       t.bigint :msg_id, null: false
-      t.bigint :channel, null: false
-      t.bigint :server, null: false
+      t.bigint :channel_id, null: false
+      t.bigint :server_id, null: false
       t.bigint :highlight_msg_id, null: false
       t.boolean :deleted, null: false
 

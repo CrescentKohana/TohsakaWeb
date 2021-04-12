@@ -14,6 +14,10 @@ default: &default
   username: <%= Rails.application.credentials.dig(:mysql, :username) %>
   password: <%= Rails.application.credentials.dig(:mysql, :password) %>
 
+production:
+  <<: *default
+  database: tohsaka
+
 development:
   <<: *default
   database: tohsaka
@@ -27,6 +31,3 @@ test:
   <<: *default
   #database: db/test.sqlite3
 
-production:
-  <<: *default
-  #database: db/production.sqlite3

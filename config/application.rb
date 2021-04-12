@@ -17,6 +17,8 @@ module TohsakaWeb
     # the framework and any gems in your application.
     config.force_ssl = true
 
+    config.autoload_paths << Rails.root.join('lib')
+
     path = File.join(Rails.root, "config", "user_config.yml")
     if File.exists?(path)
       cfg = YAML::load_file(File.join(path))

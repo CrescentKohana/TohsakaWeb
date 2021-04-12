@@ -4,11 +4,21 @@ class HighlightsController < ApplicationController
   def index
     return unless redirect_if_anonymous
     @highlights = Highlight.all
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @highlights }
+    end
   end
 
   def show
     return unless redirect_if_anonymous
     @highlight = Highlight.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @highlight }
+    end
   end
 
   private

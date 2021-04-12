@@ -1,14 +1,15 @@
 <h1>Triggers</h1>
 <h3><%= link_to 'Create a new trigger', new_trigger_path %></h3>
 <p>First value of options is the chance of the trigger and the second is the mode: exact/any/regex.</p>
+<p>Calls format: Occurences + Calls</p>
 <div class="rTable">
   <div class="rTableBody">
     <div class="rTableRow label">
       <div class="rTableHead">Phrase</div>
       <div class="rTableHead">Reply / File</div>
-      <div class="rTableHead">Options</div>
-      <div class="rTableHead">Occurences + Calls</div>
-      <div class="rTableHead">Actions</div>
+      <div style="text-align: right;" class="rTableHead">Options</div>
+      <div style="text-align: center;" class="rTableHead">Calls</div>
+      <div style="text-align: center;" class="rTableHead">Actions</div>
     </div>
 
     <% @triggers.each do |trigger| %>
@@ -27,21 +28,17 @@
                 trigger.reply
               end %>
         </div>
-        <div style="width: 100px;" class="rTableCell item">
-          <%= if trigger.chance == 0
-                tohsaka_bridge.get_def_trigger_chance(trigger.mode).to_s + "% "
-              else
-                trigger.chance.to_s + "% "
-              end %>
+        <div style="width: 100px; text-align: right;" class="rTableCell item">
           <%= mode_in_words(trigger.mode) %>
+          <%= tohsaka_bridge.parse_chance(trigger.chance, trigger.mode).to_s + " %"  %>
         </div>
-        <div style="width: 50px;" class="rTableCell item">
+        <div style="width: 50px; text-align: center;" class="rTableCell item">
           <%= trigger.occurences %> + <%= trigger.calls %>
         </div>
-        <div style="width: 140px;" class="rTableCell item">
-          <%= link_to 'Show', trigger_path(trigger) %>
-          <%= link_to 'Edit', edit_trigger_path(trigger) %>
-          <%= link_to 'Destroy', trigger_path(trigger), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <div style="width: 75px; text-align: center;" class="rTableCell item">
+          <%= link_to '👀', trigger_path(trigger) %>
+          <%= link_to '📝', edit_trigger_path(trigger) %>
+          <%= link_to '🗑️', trigger_path(trigger), method: :delete, data: { confirm: 'Are you sure?' } %>
         </div>
       </div>
     <% end %>
