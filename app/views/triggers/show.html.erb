@@ -5,11 +5,7 @@
 
 <p>
   <b>Options:</b>
-  <%= if @trigger.chance == 0
-        tohsaka_bridge.get_def_trigger_chance(@trigger.mode).to_s + "% "
-      else
-        @trigger.chance.to_s + "% "
-      end %>
+  <%= tohsaka_bridge.parse_chance(@trigger.chance, @trigger.mode).to_s + " %" %>
   <%= mode_in_words(@trigger.mode) %>
 </p>
 

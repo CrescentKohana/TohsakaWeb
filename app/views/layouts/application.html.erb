@@ -29,7 +29,7 @@
             <img src="<%= avatar_url(get_discord_id, get_avatar_hash) %>?size=128" alt="User avatar" width="64" height="64">
           </div>
           <div class="auth_child">
-            <span class="text_hide_parent"><%= get_name %><span class="text_hide">#<%= get_discriminator %></span></span><br>
+            <span class="text_hide_parent"><%= get_name %><span class="text_hide">#<%= format('%04d', get_discriminator) %></span></span><br>
             <%= link_to "Logout", "/logout" %>
           </div>
         </div>

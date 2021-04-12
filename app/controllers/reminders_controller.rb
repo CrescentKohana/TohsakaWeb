@@ -6,12 +6,22 @@ class RemindersController < ApplicationController
   def index
     return unless redirect_if_anonymous
     @reminders = Reminder.where(:user_id => get_user_id)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @reminders }
+    end
   end
 
   def show
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
     @reminder = Reminder.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @reminder }
+    end
   end
 
   def new
@@ -80,7 +90,7 @@ class RemindersController < ApplicationController
 
   private
   def reminder_params
-    params.require(:reminder).permit(:datetime, :message, :channel, :repeat, :repeat_day, :repeat_hour, :repeat_min)
+    params.require(:reminder).permit(:datetime, :message, :channel_id, :repeat, :repeat_day, :repeat_hour, :repeat_min)
   end
 
   def permission?(reminder_id)

@@ -12,6 +12,14 @@ Rails.application.routes.draw do
   resources :reminders
   resources :triggers
   resources :highlights
+  resources :linkeds
+
+  scope "/api/v1", defaults: {format: :json} do
+    resources :reminders
+    resources :triggers
+    resources :highlights
+    resources :linkeds
+  end
 
   root 'home#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
