@@ -3,10 +3,12 @@ class LinkedsController < ApplicationController
 
   def index
     return unless redirect_if_anonymous
+
     unless params[:q].nil?
       search
       return
     end
+
     @linkeds = Linked.where(channel_id: tohsaka_bridge.channels_user_has_rights_to(get_discord_id).map { |ch| ch.id })
 
     respond_to do |format|
@@ -17,6 +19,7 @@ class LinkedsController < ApplicationController
 
   def show
     return unless redirect_if_anonymous
+
     @linked = Linked.find(params[:id])
 
     unless tohsaka_bridge.channels_user_has_rights_to(get_discord_id).map { |ch| ch.id }.include?(@linked[:channel_id])

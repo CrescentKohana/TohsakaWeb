@@ -23,7 +23,8 @@ A Ruby on Rails web application which is designed to work with [TohsakaBot](http
    EDITOR="nano" rails credentials:edit
    ```
 5. Setup NGINX. Example config with SSL for TohsakaWeb [here](documentation/tohsakaweb_nginx.conf).
-6. The app can be started by 
+6. Precompile assets with `rails assets:precompile`
+7. The app can be started by 
    
    ```
    bundle exec puma -b unix://tmp/sockets/server.sock

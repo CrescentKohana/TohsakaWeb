@@ -10,6 +10,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-discord'
 
 gem 'jwt'
+gem 'rack-cors'
 
 # Faraday HTTP
 gem 'faraday'
@@ -19,7 +20,8 @@ gem 'simple_form'
 
 # MariaDB
 gem 'mysql2'
-# SQL search
+
+# Simple search for SQL
 gem 'minidusen'
 
 # Hamburger menus
@@ -51,8 +53,7 @@ gem 'jbuilder', '~> 2.11.2'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
+gem 'bcrypt'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

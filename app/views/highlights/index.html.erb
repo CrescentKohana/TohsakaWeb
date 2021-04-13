@@ -18,8 +18,8 @@
         <div class="rTableCell item"><%= link_to highlight.timestamp, highlight_path(highlight) %></div>
 
         <div style="width: 180px;" class="rTableCell item">
-          <%= tohsaka_bridge.get_server(highlight.server).name + " / \n" %>
-          <%= tohsaka_bridge.get_channel(highlight.channel).name %>
+          <%= tohsaka_bridge.get_server(highlight.server_id).name + " / \n" %>
+          <%= tohsaka_bridge.get_channel(highlight.channel_id).name %>
         </div>
       </div>
     <% end %>
