@@ -12,8 +12,7 @@ class SessionsController < ApplicationController
         user.update(
           :name => auth_hash["extra"]["raw_info"]["username"],
           :discriminator => auth_hash["extra"]["raw_info"]["discriminator"],
-          :avatar => auth_hash["extra"]["raw_info"]["avatar"],
-          :locale => auth_hash["extra"]["raw_info"]["locale"]
+          :avatar => auth_hash["extra"]["raw_info"]["avatar"]
         )
 
         session[:user_id] = @authorization.user.id

@@ -5,6 +5,7 @@ class TriggersController < ApplicationController
 
   def index
     return unless redirect_if_anonymous
+
     @triggers = Trigger.where(:user_id => get_user_id)
 
     respond_to do |format|
@@ -16,6 +17,7 @@ class TriggersController < ApplicationController
   def show
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
+
     @trigger = Trigger.find(params[:id])
 
     respond_to do |format|

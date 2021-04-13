@@ -6,8 +6,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application_#{current_theme}", media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
   <body>
 
@@ -19,6 +18,7 @@
           <li><%= link_to 'Reminders', controller: 'reminders' %></li>
           <li><%= link_to 'Triggers', controller: 'triggers' %></li>
           <li><%= link_to 'Highlights', controller: 'highlights' %></li>
+          <li><%= link_to 'API', '/api' %></li>
         <% end %>
       </ul>
     </div>
@@ -29,7 +29,8 @@
             <img src="<%= avatar_url(get_discord_id, get_avatar_hash) %>?size=128" alt="User avatar" width="64" height="64">
           </div>
           <div class="auth_child">
-            <span class="text_hide_parent"><%= get_name %><span class="text_hide">#<%= format('%04d', get_discriminator) %></span></span><br>
+            <%= link_to "<span class=\"text_hide_parent\">#{get_name}<span class=\"text_hide\">##{format('%04d', get_discriminator)}</span></span>".html_safe, "/settings" %>
+            <br>
             <%= link_to "Logout", "/logout" %>
           </div>
         </div>
@@ -41,7 +42,7 @@
           </div>
           <div class="auth_child">
             <span class="text_hide_parent">User<span class="text_hide">#0000</span></span><br>
-            <%= link_to "Login with Discord", "/auth/discord", method: :post %>
+            <%= button_to "Login with Discord", "/auth/discord", method: :post %>
           </div>
         </div>
 
@@ -54,7 +55,7 @@
   </div>
 
   <div id="footer">
-    Luukuton 2020 ・ Powered by Ruby on Rails 6.1.3 ・ Bot is currently
+    Luukuton 2021 ・ Powered by Ruby on Rails 6.1.3 ・ Bot is currently
     <%= (tohsakabot_online(true) ? " <span style='color:darkgreen'>online</span>" : " <span style='color:darkred'>offline</span>").html_safe %>.
   </div>
   </body>
