@@ -130,6 +130,16 @@ a:hover {
     display: inline;
 }
 
+/* Responsive */
+@media (max-width: 850px) {
+}
+
+
+code {
+  display: block;
+  word-wrap: break-word;
+}
+
 @import 'components/nav';
 @import 'components/table';
 @import 'components/form';

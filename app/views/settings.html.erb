@@ -23,7 +23,4 @@
 <% end %>
 
 <h3>API key (JWT)</h3>
-
-<label>
-  <input style="width: 600px" type="text" name="jwt" value=<%= encode_token({user_id: @user.id}) %> disabled="true">
-</label>
+<code><%= encode_token({user_id: @user.id}) %></code>
