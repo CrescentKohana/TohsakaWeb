@@ -14,7 +14,7 @@
       <div class="rTableRow">
         <div style="white-space:pre-line" class="rTableCell item"><%= reminder.datetime.to_s + (reminder.repeat != 0 ? "\nevery #{distance_of_time_in_words(reminder.repeat)}".html_safe : "") %></div>
         <div class="rTableCell item"><%= reminder.message %></div>
-        <div class="rTableCell item"><%= tohsaka_bridge.get_channel(reminder.channel_id).name  %></div>
+        <div class="rTableCell item"><%= channel_name(reminder)  %></div>
         <div style="width: 75px; text-align: center;" class="rTableCell item">
           <%= link_to '👀', reminder_path(reminder) %>
           <%= link_to '📝', edit_reminder_path(reminder) %>
