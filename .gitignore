@@ -40,5 +40,5 @@
 yarn-debug.log*
 .yarn-integrity
 
-config/credentials.yml.enc
-config/user_config.yml
+/config/credentials.yml.enc
+/config/user_config.yml
