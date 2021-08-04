@@ -64,6 +64,7 @@ class RemindersController < ApplicationController
   def update
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
+
     @reminder = Reminder.find(params[:id])
 
     days = reminder_params[:repeat_day].to_i
@@ -82,6 +83,7 @@ class RemindersController < ApplicationController
   def destroy
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
+
     @reminder = Reminder.find(params[:id])
     @reminder.destroy
 
@@ -95,19 +97,29 @@ class RemindersController < ApplicationController
 
   def permission?(reminder_id)
     return true if Reminder.find(reminder_id)[:user_id] == session[:user_id]
+
     redirect_to root_path
     false
   end
 
   def choosable_channels(discord_uid)
     return nil if discord_uid.nil?
+
     possible_channels = Hash.new
     tohsaka_bridge.channels_user_has_rights_to(discord_uid).each do |c|
-      possible_channels[c.id] = tohsaka_bridge.is_pm?(c.id) ? "!Private Message Channel" : c.name
+      possible_channels[c.id] = tohsaka_bridge.is_pm?(c.id) ? "#Private Message Channel" : c.name
     end
 
     possible_channels
   end
 
-  helper_method :choosable_channels
+  def channel_name(reminder)
+    return "Deleted channel" if reminder.channel_id.nil? || reminder.channel_id.zero?
+    return "Deleted channel" if tohsaka_bridge.get_channel(reminder.channel_id).nil?
+
+    tohsaka_bridge.get_channel(reminder.channel_id).name
+  end
+
+  helper_method :choosable_channels,
+                :channel_name
 end
