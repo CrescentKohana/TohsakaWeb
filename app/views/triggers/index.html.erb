@@ -1,7 +1,7 @@
 <h1>Triggers</h1>
 <h3><%= link_to 'Create a new trigger', new_trigger_path %></h3>
 <p>First value of options is the chance of the trigger and the second is the mode: exact/any/regex.</p>
-<p>Calls format: Occurences + Calls</p>
+<p>Calls format: Occurrences + Calls</p>
 <div class="rTable">
   <div class="rTableBody">
     <div class="rTableRow label">
@@ -33,12 +33,12 @@
           <%= tohsaka_bridge.parse_chance(trigger.chance, trigger.mode).to_s + " %"  %>
         </div>
         <div style="width: 50px; text-align: center;" class="rTableCell item">
-          <%= trigger.occurences %> + <%= trigger.calls %>
+          <%= trigger.occurrences %> + <%= trigger.calls %>
         </div>
         <div style="width: 75px; text-align: center;" class="rTableCell item">
           <%= link_to '👀', trigger_path(trigger) %>
           <%= link_to '📝', edit_trigger_path(trigger) %>
-          <%= link_to '🗑️', trigger_path(trigger), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= button_to '🗑️', trigger_path(trigger), method: :delete, data: { confirm: 'Are you sure?' } %>
         </div>
       </div>
     <% end %>
