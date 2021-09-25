@@ -5,7 +5,7 @@ class CreateLinkeds < ActiveRecord::Migration[6.1]
       t.text :url
       t.datetime :timestamp
       t.text :file_hash
-      t.bigint :user_id
+      t.bigint :author_id
       t.bigint :server_id
       t.bigint :channel_id
       t.bigint :msg_id

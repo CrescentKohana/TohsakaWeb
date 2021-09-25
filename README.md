@@ -3,8 +3,8 @@ A Ruby on Rails web application which is designed to work with [TohsakaBot](http
 
 ## Usage
 - Setup [TohsakaBot](https://github.com/Luukuton/TohsakaBot).
-- Install everything by firt running
-   `bundle install` and then `yarn install --check-files` or `npm install`.
+- Install everything by first running
+   `bundle install` and then `npm install`.
 - Copy [config/user_config.example.yml](config/user_config.example.yml) as `config/user_config.yml`. Now enter the webhost (eg. rin.domain.com), path to TohsakaBot (eg. /home/rin/TohsakaBot) and Discord ID of the owner to there.
 - Enter Discord and SQL database credentials to config/credentials.ymc.enc with the following command: 
    
