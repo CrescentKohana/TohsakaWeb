@@ -37,7 +37,7 @@ class CreateTables < ActiveRecord::Migration[6.0]
       t.bigint :server_id, null: false
       t.integer :chance, default: 0
       t.integer :mode, default: 0
-      t.bigint :occurences, null: false, default: 0
+      t.bigint :occurrences, null: false, default: 0
       t.bigint :calls, null: false, default: 0
       t.datetime :last_triggered, null: true
 
