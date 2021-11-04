@@ -15,12 +15,14 @@ Rails.application.routes.draw do
   resources :users
   resources :reminders
   resources :triggers
+  resources :issues
   resources :highlights
   resources :linkeds
 
   scope "/api/v1", defaults: {format: :json} do
     resources :reminders
     resources :triggers
+    resources :issues
     resources :highlights
     resources :linkeds
   end
