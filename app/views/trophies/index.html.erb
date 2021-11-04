@@ -1,0 +1,22 @@
+<h1>Trophies</h1>
+
+<div class="rTable">
+  <div class="rTableBody">
+    <div class="rTableRow label">
+      <div class="rTableHead">Type</div>
+      <div class="rTableHead">Content</div>
+      <div class="rTableHead">Duration</div>
+      <div class="rTableHead">User</div>
+    </div>
+
+    <% @trophies.order(:created_at).each do |trophy| %>
+      <div class="rTableRow">
+        <div class="rTableCell item"><%= trophy.type %></div>
+        <div class="rTableCell item"><%= trophy.reason %></div>
+        <div class="rTableCell item"><%= trophy.duration  %></div>
+        <div class="rTableCell item"><%= trophy.discord_user_id  %></div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<br>
