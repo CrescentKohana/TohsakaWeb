@@ -15,7 +15,9 @@
           <%= issue.status %>
         </div>
         <div class="rTableCell item"><%= issue.content %></div>
-        <div style="width: 100px;" class="rTableCell item"><%= issue.user.name %></div>
+        <div style="width: 100px;" class="rTableCell item">
+          <%= issue.user.name %>
+        </div>
         <div style="width: 75px; text-align: center;" class="rTableCell item">
           <%= link_to '👀', issue_path(issue) %>
           <% if allowed?(issue.id) %>

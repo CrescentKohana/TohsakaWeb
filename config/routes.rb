@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :issues
   resources :highlights
   resources :linkeds
+  resources :trophies
 
   scope "/api/v1", defaults: {format: :json} do
     resources :reminders
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
     resources :issues
     resources :highlights
     resources :linkeds
+    resources :trophies
   end
 
   root 'home#index'
