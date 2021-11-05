@@ -20,4 +20,12 @@ class TrophiesController < ApplicationController
       format.json { render json: @trophy }
     end
   end
+
+  private
+
+  def category(n)
+    { role: %w[Unknown Winner Fool][n], color: %w[#000 #00921B #BE0000][n] }
+  end
+
+  helper_method :category
 end
