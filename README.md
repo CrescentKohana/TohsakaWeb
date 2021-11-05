@@ -12,16 +12,15 @@ A Ruby on Rails web application which is designed to work with [TohsakaBot](http
    EDITOR="nano" rails credentials:edit
    ```
    
-- Setup NGINX. Example config with SSL for TohsakaWeb [here](documentation/tohsakaweb_nginx.conf).
-- Precompile assets with `rails assets:precompile`
-- The app can be started by 
-   
-   ```
-   bundle exec puma -b unix://tmp/sockets/server.sock
-   ```
+- **Production**
+  - Setup NGINX. Example config with SSL for TohsakaWeb [here](documentation/tohsakaweb_nginx.conf).
+  - Precompile assets with `rails assets:precompile`
+  - Start the app `bundle exec puma -b unix://tmp/sockets/server.sock`
+- **Development**
+  - Start the app `bundle exec puma -b tcp://localhost`
 
 ## Dependencies
 * Web server (NGINX recommended)
-* Ruby >= 2.7 supported
-* Node.js (tested 14.5.0+) and Yarn (tested 1.22.4+) for Rails
+* Ruby >= 3.0 supported
+* Node.js (tested 14.5.0+) for Rails
 * libmysqlclient-dev
