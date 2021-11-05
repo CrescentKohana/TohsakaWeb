@@ -19,10 +19,11 @@ production:
   database: tohsaka
 
 development:
-  <<: *default
-  database: tohsaka
- # database: db/development.sqlite3
- # socket: /tmp/mysql.sock
+#  <<: *default
+#  database: tohsaka
+  adapter: sqlite3
+  database: db/development.sqlite3
+#  socket: /tmp/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
