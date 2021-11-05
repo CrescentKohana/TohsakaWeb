@@ -1,4 +1,6 @@
 class Trigger < ApplicationRecord
+  belongs_to :user
+
   validates :phrase, presence: true
   validates :mode, presence: true
   validates :server_id, presence: true
