@@ -1,4 +1,6 @@
 class Reminder < ApplicationRecord
+  belongs_to :user
+
   attr_accessor :repeat_day, :repeat_hour, :repeat_min
 
   validates :datetime, presence: true
