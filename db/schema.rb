@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_04_182442) do
+ActiveRecord::Schema.define(version: 2021_11_04_233718) do
 
   create_table "authorizations", charset: "utf8mb4", force: :cascade do |t|
     t.string "provider", null: false
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 2021_11_04_182442) do
 
   create_table "issues", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.text "content", null: false
-    t.integer "type", default: 0, null: false
-    t.text "tags"
+    t.integer "category", default: 0, null: false
+    t.text "status", default: "'new'", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -87,12 +87,13 @@ ActiveRecord::Schema.define(version: 2021_11_04_182442) do
   create_table "trophies", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.text "reason", null: false
     t.integer "duration", null: false
-    t.integer "type", default: 0, null: false
-    t.bigint "discord_user_id", null: false
+    t.integer "category", default: 0, null: false
+    t.bigint "discord_uid", null: false
     t.bigint "server_id", null: false
     t.bigint "role_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "expired", default: false, null: false
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
