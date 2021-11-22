@@ -18,6 +18,11 @@
   <%= f.input :category,
               :label => "Category",
               collection: %w[feature bug] %>
+  <%= f.input :server_id,
+              :label => "Server",
+              collection: choosable_servers(get_discord_id),
+              :label_method => :second,
+              :value_method => :first %>
 
 
   <%= f.button :submit %>

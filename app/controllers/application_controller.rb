@@ -139,6 +139,18 @@ class ApplicationController < ActionController::Base
     JWT.encode(payload, Rails.application.credentials.dig(:jwt_secret), 'HS256')
   end
 
+  def channel_permission?(server_id, channel_id)
+    tohsaka_bridge.channel_permission?(server_id, channel_id, get_discord_id, :read_messages)
+  end
+
+  def channel_based_server_access(channel, id_only = true)
+    tohsaka_bridge.get_server_config.map do |server_id, server|
+      if channel_permission?(server_id, server[channel])
+        id_only ? server_id : { id: server_id, data: server }
+      end
+    end
+  end
+
   helper_method :api?,
                 :tohsaka_bridge,
                 :tohsakabot_online,
@@ -153,5 +165,7 @@ class ApplicationController < ActionController::Base
                 :permissions?,
                 :is_owner?,
                 :redirect_if_anonymous,
-                :encode_token
+                :encode_token,
+                :channel_permission?,
+                :channel_based_server_access
 end

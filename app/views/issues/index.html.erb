@@ -20,7 +20,7 @@
         </div>
         <div style="width: 75px; text-align: center;" class="rTableCell item">
           <%= link_to '👀', issue_path(issue) %>
-          <% if allowed?(issue.id) && issue.status == "new" %>
+          <% if owned_issue?(issue.id) && issue.status == "new" %>
             <%= link_to '📝', edit_issue_path(issue) %>
             <%= link_to '🗑️', issue_path(issue), method: :delete, data: { confirm: 'Are you sure?' } %>
           <% end %>

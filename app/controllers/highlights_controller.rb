@@ -3,7 +3,9 @@ class HighlightsController < ApplicationController
 
   def index
     return unless redirect_if_anonymous
-    @highlights = Highlight.all
+
+    servers = channel_based_server_access(:highlight_channel)
+    @highlights = Highlight.where(server_id: servers)
 
     respond_to do |format|
       format.html
@@ -13,7 +15,14 @@ class HighlightsController < ApplicationController
 
   def show
     return unless redirect_if_anonymous
+
     @highlight = Highlight.find(params[:id])
+
+    server = tohsaka_bridge.get_server_config(@highlight[:server_id])
+    unless channel_permission?(@highlight[:server_id], server[:highlight_channel])
+      redirect_to root_path
+      return
+    end
 
     respond_to do |format|
       format.html
@@ -22,6 +31,7 @@ class HighlightsController < ApplicationController
   end
 
   private
+
   def attachments_as_array(attachments)
     attachments.split
   end
