@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_04_233718) do
+ActiveRecord::Schema.define(version: 2021_11_22_202718) do
 
   create_table "authorizations", charset: "utf8mb4", force: :cascade do |t|
     t.string "provider", null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_11_04_233718) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "server_id", null: false
   end
 
   create_table "linkeds", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
