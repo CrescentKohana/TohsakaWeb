@@ -3,7 +3,9 @@ class TrophiesController < ApplicationController
 
   def index
     return unless redirect_if_anonymous
-    @trophies = Trophy.all
+
+    servers = channel_based_server_access(:default_channel)
+    @trophies = Trophy.where(server_id: servers)
 
     respond_to do |format|
       format.html
@@ -13,7 +15,14 @@ class TrophiesController < ApplicationController
 
   def show
     return unless redirect_if_anonymous
+
     @trophy = Trophy.find(params[:id])
+
+    server = tohsaka_bridge.get_server_config(@trophy[:server_id])
+    unless channel_permission?(@trophy[:server_id], server[:highlight_channel])
+      redirect_to root_path
+      return
+    end
 
     respond_to do |format|
       format.html

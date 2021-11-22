@@ -3,7 +3,9 @@ require 'simple_form'
 class IssuesController < ApplicationController
   def index
     return unless redirect_if_anonymous
-    @issues = Issue.all
+
+    servers = channel_based_server_access(:default_channel)
+    @issues = Issue.where(server_id: servers).or(Issue.where(user_id: session[:user_id]))
 
     respond_to do |format|
       format.html
@@ -15,6 +17,12 @@ class IssuesController < ApplicationController
     return unless redirect_if_anonymous
     @issue = Issue.find(params[:id])
 
+    server = tohsaka_bridge.get_server_config(@issue[:server_id])
+    if !owned_issue?(@issue[:id]) || !server.nil? && !channel_permission?(@issue[:server_id], server[:default_channel])
+      redirect_to root_path
+      return
+    end
+
     respond_to do |format|
       format.html
       format.json { render json: @issue }
@@ -23,6 +31,7 @@ class IssuesController < ApplicationController
 
   def new
     return unless redirect_if_anonymous
+
     @issue = Issue.new
   end
 
@@ -72,18 +81,18 @@ class IssuesController < ApplicationController
   private
 
   def issue_params
-    params.require(:issue).permit(:content, :category)
+    params.require(:issue).permit(:content, :category, :server_id)
   end
 
   def permission?(issue_id)
-    return true if allowed?(issue_id)
+    return true if owned_issue?(issue_id)
 
     redirect_to root_path
     false
   end
 
-  def allowed?(issue_id)
-    return Issue.find(issue_id)[:user_id] == session[:user_id]
+  def owned_issue?(issue_id)
+    Issue.find(issue_id)[:user_id] == session[:user_id]
   end
 
   def category(n)
@@ -103,7 +112,20 @@ class IssuesController < ApplicationController
     end
   end
 
-  helper_method :allowed?,
+  def choosable_servers(discord_uid)
+    return nil if discord_uid.nil?
+
+    servers = Hash.new
+    channel_based_server_access(:default_channel, false).each do |server|
+      next if server.nil?
+      servers[server[:id]] = server[:data][:name]
+    end
+
+    servers
+  end
+
+  helper_method :owned_issue?,
                 :category,
-                :status_color
+                :status_color,
+                :choosable_servers
 end

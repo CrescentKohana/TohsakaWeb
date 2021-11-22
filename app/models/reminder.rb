@@ -10,6 +10,7 @@ class Reminder < ApplicationRecord
   validate :repeat_interval_as_seconds
 
   private
+
   def repeat_interval_as_seconds
     minutes = self.repeat_min.to_i
     hours = self.repeat_hour.to_i
