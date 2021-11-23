@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simple_form'
 
 class RemindersController < ApplicationController
@@ -5,7 +7,8 @@ class RemindersController < ApplicationController
 
   def index
     return unless redirect_if_anonymous
-    @reminders = Reminder.where(:user_id => get_user_id)
+
+    @reminders = Reminder.where(user_id: user_id)
 
     respond_to do |format|
       format.html
@@ -16,6 +19,7 @@ class RemindersController < ApplicationController
   def show
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
+
     @reminder = Reminder.find(params[:id])
 
     respond_to do |format|
@@ -26,28 +30,28 @@ class RemindersController < ApplicationController
 
   def new
     return unless redirect_if_anonymous
+
     @reminder = Reminder.new
   end
 
   def edit
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
+
     @reminder = Reminder.find(params[:id])
-
     duration = @reminder[:repeat]
+    return unless duration.to_i.positive?
 
-    if duration.to_i > 0
-      @reminder.repeat_min = minutes = (duration / 60) % 60
-      @reminder.repeat_hour = hours = duration % (60 * 60)
-      @reminder.repeat_day = (duration - minutes - hours) / (60 * 60 * 24)
-    end
+    @reminder.repeat_min = minutes = (duration / 60) % 60
+    @reminder.repeat_hour = hours = duration % (60 * 60)
+    @reminder.repeat_day = (duration - minutes - hours) / (60 * 60 * 24)
   end
 
   def create
     return unless redirect_if_anonymous
 
     @reminder = Reminder.new(reminder_params)
-    @reminder[:user_id] = get_user_id
+    @reminder[:user_id] = user_id
 
     days = reminder_params[:repeat_day].to_i
     hours = reminder_params[:repeat_hour].to_i
@@ -91,6 +95,7 @@ class RemindersController < ApplicationController
   end
 
   private
+
   def reminder_params
     params.require(:reminder).permit(:datetime, :message, :channel_id, :repeat, :repeat_day, :repeat_hour, :repeat_min)
   end
@@ -105,7 +110,7 @@ class RemindersController < ApplicationController
   def choosable_channels(discord_uid)
     return nil if discord_uid.nil?
 
-    possible_channels = Hash.new
+    possible_channels = {}
     tohsaka_bridge.channels_user_has_rights_to(discord_uid).each do |c|
       possible_channels[c.id] = tohsaka_bridge.is_pm?(c.id) ? "#Private Message Channel" : c.name
     end

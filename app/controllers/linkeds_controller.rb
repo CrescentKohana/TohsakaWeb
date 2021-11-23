@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LinkedsController < ApplicationController
   before_action :tohsakabot_online
 
@@ -9,7 +11,7 @@ class LinkedsController < ApplicationController
       return
     end
 
-    @linkeds = Linked.where(channel_id: tohsaka_bridge.channels_user_has_rights_to(get_discord_id).map { |ch| ch.id })
+    @linkeds = Linked.where(channel_id: tohsaka_bridge.channels_user_has_rights_to(discord_id).map(&:id))
 
     respond_to do |format|
       format.html
@@ -22,7 +24,7 @@ class LinkedsController < ApplicationController
 
     @linked = Linked.find(params[:id])
 
-    unless tohsaka_bridge.channels_user_has_rights_to(get_discord_id).map { |ch| ch.id }.include?(@linked[:channel_id])
+    unless tohsaka_bridge.channels_user_has_rights_to(discord_id).map(&:id).include?(@linked[:channel_id])
       head :not_found
       return
     end
@@ -34,7 +36,7 @@ class LinkedsController < ApplicationController
   end
 
   def search
-    @linkeds = Linked.where(channel_id: tohsaka_bridge.channels_user_has_rights_to(get_discord_id).map { |ch| ch.id })
+    @linkeds = Linked.where(channel_id: tohsaka_bridge.channels_user_has_rights_to(discord_id).map(&:id))
     search_results = LinkedFilter.new.filter(@linkeds, params[:q])
     search_results.to_sql
     search_results.to_a

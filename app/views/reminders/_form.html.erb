@@ -19,7 +19,7 @@
   <%= f.input :message %>
   <%= f.input :channel_id,
               :label => "Channel",
-              collection: choosable_channels(get_discord_id),
+              collection: choosable_channels(discord_id),
               :label_method => :second,
               :value_method => :first %>
   <b>Repeat interval </b>

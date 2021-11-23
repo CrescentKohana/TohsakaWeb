@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Trigger < ApplicationRecord
   belongs_to :user
 
@@ -12,9 +14,8 @@ class Trigger < ApplicationRecord
   validates :file, file_size: { less_than: 8.megabytes }
 
   private
+
   def reply_and_file_blank
-    if !reply.blank? && !file.filename.nil?
-      errors.add(:base, "Specify a reply or a file, not both")
-    end
+    errors.add(:base, "Specify a reply or a file, not both") if !reply.blank? && !file.filename.nil?
   end
 end

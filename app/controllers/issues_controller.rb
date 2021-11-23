@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'simple_form'
 
 class IssuesController < ApplicationController
   def index
     return unless redirect_if_anonymous
 
-    servers = channel_based_server_access(:default_channel)
+    servers = servers_with_access_to(:default_channel)
     @issues = Issue.where(server_id: servers).or(Issue.where(user_id: session[:user_id]))
 
     respond_to do |format|
@@ -15,13 +17,9 @@ class IssuesController < ApplicationController
 
   def show
     return unless redirect_if_anonymous
-    @issue = Issue.find(params[:id])
 
-    server = tohsaka_bridge.get_server_config(@issue[:server_id])
-    if !owned_issue?(@issue[:id]) || !server.nil? && !channel_permission?(@issue[:server_id], server[:default_channel])
-      redirect_to root_path
-      return
-    end
+    @issue = Issue.find(params[:id])
+    return unless redirect_if_no_discord_perms(@issue[:server_id], :default_channel, own?(@issue[:id]))
 
     respond_to do |format|
       format.html
@@ -46,7 +44,7 @@ class IssuesController < ApplicationController
     return unless redirect_if_anonymous
 
     @issue = Issue.new(issue_params)
-    @issue[:user_id] = get_user_id
+    @issue[:user_id] = user_id
 
     if @issue.save
       redirect_to @issue
@@ -60,6 +58,7 @@ class IssuesController < ApplicationController
     return unless permission?(params[:id])
 
     @issue = Issue.find(params[:id])
+    return unless @issue[:status] == 'new'
 
     if @issue.update(issue_params)
       redirect_to @issue
@@ -73,6 +72,8 @@ class IssuesController < ApplicationController
     return unless permission?(params[:id])
 
     @issue = Issue.find(params[:id])
+    return unless @issue[:status] == 'new'
+
     @issue.destroy
 
     redirect_to issues_path
@@ -85,18 +86,18 @@ class IssuesController < ApplicationController
   end
 
   def permission?(issue_id)
-    return true if owned_issue?(issue_id)
+    return true if own?(issue_id)
 
     redirect_to root_path
     false
   end
 
-  def owned_issue?(issue_id)
+  def own?(issue_id)
     Issue.find(issue_id)[:user_id] == session[:user_id]
   end
 
-  def category(n)
-    %w[Feature Bug][n]
+  def category(index)
+    %w[Feature Bug][index]
   end
 
   def status_color(status)
@@ -115,16 +116,17 @@ class IssuesController < ApplicationController
   def choosable_servers(discord_uid)
     return nil if discord_uid.nil?
 
-    servers = Hash.new
-    channel_based_server_access(:default_channel, false).each do |server|
+    servers = {}
+    servers_with_access_to(:default_channel, false).each do |server|
       next if server.nil?
+
       servers[server[:id]] = server[:data][:name]
     end
 
     servers
   end
 
-  helper_method :owned_issue?,
+  helper_method :own?,
                 :category,
                 :status_color,
                 :choosable_servers

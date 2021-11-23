@@ -28,10 +28,10 @@
       <% if logged_in? %>
         <div id="auth_inner">
           <div id="auth_avatar">
-            <img src="<%= avatar_url(get_discord_id, get_avatar_hash) %>?size=128" alt="User avatar" width="64" height="64">
+            <img src="<%= avatar_url(discord_id, avatar_hash) %>?size=128" alt="User avatar" width="64" height="64">
           </div>
           <div class="auth_child">
-            <%= link_to "<span class=\"text_hide_parent\">#{get_name}<span class=\"text_hide\">##{format('%04d', get_discriminator)}</span></span>".html_safe, "/settings" %>
+            <%= link_to "<span class=\"text_hide_parent\">#{user_name}<span class=\"text_hide\">##{format('%04d', discriminator)}</span></span>".html_safe, "/settings" %>
             <br>
             <%= link_to "Logout", "/logout" %>
           </div>

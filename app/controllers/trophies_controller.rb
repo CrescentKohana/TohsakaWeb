@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class TrophiesController < ApplicationController
   before_action :tohsakabot_online
 
   def index
     return unless redirect_if_anonymous
 
-    servers = channel_based_server_access(:default_channel)
+    servers = servers_with_access_to(:default_channel)
     @trophies = Trophy.where(server_id: servers)
 
     respond_to do |format|
@@ -17,12 +19,7 @@ class TrophiesController < ApplicationController
     return unless redirect_if_anonymous
 
     @trophy = Trophy.find(params[:id])
-
-    server = tohsaka_bridge.get_server_config(@trophy[:server_id])
-    unless channel_permission?(@trophy[:server_id], server[:highlight_channel])
-      redirect_to root_path
-      return
-    end
+    return unless redirect_if_no_discord_perms(@trophy[:server_id], :default_channel)
 
     respond_to do |format|
       format.html
@@ -32,8 +29,8 @@ class TrophiesController < ApplicationController
 
   private
 
-  def category(n)
-    { role: %w[Unknown Winner Fool][n], color: %w[#000 #00921B #BE0000][n] }
+  def category(index)
+    { role: %w[Unknown Winner Fool][index], color: %w[#000 #00921B #BE0000][index] }
   end
 
   helper_method :category

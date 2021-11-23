@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simple_form'
 
 class TriggersController < ApplicationController
@@ -6,7 +8,7 @@ class TriggersController < ApplicationController
   def index
     return unless redirect_if_anonymous
 
-    @triggers = Trigger.where(:user_id => get_user_id)
+    @triggers = Trigger.where(user_id: user_id)
 
     respond_to do |format|
       format.html
@@ -28,19 +30,22 @@ class TriggersController < ApplicationController
 
   def new
     return unless redirect_if_anonymous
+
     @trigger = Trigger.new
   end
 
   def edit
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
+
     @trigger = Trigger.find(params[:id])
   end
 
   def create
     return unless redirect_if_anonymous
+
     @trigger = Trigger.new(trigger_params)
-    @trigger.user_id = get_user_id
+    @trigger.user_id = user_id
     @trigger.chance = 0 if permissions?(100)
 
     if @trigger.save
@@ -56,6 +61,7 @@ class TriggersController < ApplicationController
   def update
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
+
     @trigger = Trigger.find(params[:id])
     file = @trigger[:file]
     new_file = false
@@ -77,7 +83,9 @@ class TriggersController < ApplicationController
       # If there is a new file, save it.
       tohsaka_bridge.save_trigger_file(@trigger.file.current_path, @trigger.file.filename) if new_file
       # If there is (a new file OR a reply) AND there is a previous file, remove the previous file.
-      File.delete(Rails.configuration.tohsaka_bot_root + "/data/triggers/#{file}") if (new_file || new_reply) && !file.blank?
+      if (new_file || new_reply) && !file.blank?
+        File.delete(Rails.configuration.tohsaka_bot_root + "/data/triggers/#{file}")
+      end
 
       tohsaka_bridge.reload_triggers
       redirect_to @trigger
@@ -89,37 +97,39 @@ class TriggersController < ApplicationController
   def destroy
     return unless redirect_if_anonymous
     return unless permission?(params[:id])
+
     @trigger = Trigger.find(params[:id])
     file = @trigger[:file]
-    if @trigger.destroy
-      File.delete(Rails.configuration.tohsaka_bot_root + "/data/triggers/#{file}") unless file.blank?
-    end
+    File.delete(Rails.configuration.tohsaka_bot_root + "/data/triggers/#{file}") if @trigger.destroy && !file.blank?
 
     tohsaka_bridge.reload_triggers
     redirect_to triggers_path
   end
 
   private
+
   def trigger_params
     params.require(:trigger).permit(:phrase, :reply, :server_id, :mode, :file, :chance)
   end
 
   def upload_file(file)
-    unless file.nil?
-      # Returns the new name while moving it to triggers folder inside TohsakaBot
-      tohsaka_bridge.save_trigger_file(file)
-    end
+    return if file.nil?
+
+    # Returns the new name while moving it to triggers folder inside TohsakaBot
+    tohsaka_bridge.save_trigger_file(file)
   end
 
   def permission?(trigger_id)
     return true if Trigger.find(trigger_id)[:user_id] == session[:user_id]
+
     redirect_to root_path
     false
   end
 
   def choosable_servers(discord_uid)
     return nil if discord_uid.nil?
-    possible_servers = Hash.new
+
+    possible_servers = {}
     tohsaka_bridge.servers_user_is_in(discord_uid).each do |c|
       possible_servers[c.id] = c.name
     end
@@ -130,11 +140,11 @@ class TriggersController < ApplicationController
   def mode_in_words(mode_id)
     case mode_id.to_i
     when 1
-      return "any"
+      "any"
     when 2
-      return "regex"
+      "regex"
     else
-      return "exact"
+      "exact"
     end
   end
 

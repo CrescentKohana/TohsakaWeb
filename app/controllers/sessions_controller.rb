@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
-  def new
-  end
+  def new; end
 
   def create
     begin
@@ -10,9 +11,9 @@ class SessionsController < ApplicationController
       if @authorization
         user = User.find(@authorization.user.id)
         user.update(
-          :name => auth_hash["extra"]["raw_info"]["username"],
-          :discriminator => auth_hash["extra"]["raw_info"]["discriminator"],
-          :avatar => auth_hash["extra"]["raw_info"]["avatar"]
+          name: auth_hash["extra"]["raw_info"]["username"],
+          discriminator: auth_hash["extra"]["raw_info"]["discriminator"],
+          avatar: auth_hash["extra"]["raw_info"]["avatar"]
         )
 
         session[:user_id] = @authorization.user.id
@@ -31,12 +32,12 @@ class SessionsController < ApplicationController
           return
         end
 
-        user = User.new :name => auth_hash["extra"]["raw_info"]["username"],
-                        :discriminator => auth_hash["extra"]["raw_info"]["discriminator"],
-                        :avatar => auth_hash["extra"]["raw_info"]["avatar"],
-                        :locale =>auth_hash["extra"]["raw_info"]["locale"]
+        user = User.new name: auth_hash["extra"]["raw_info"]["username"],
+                        discriminator: auth_hash["extra"]["raw_info"]["discriminator"],
+                        avatar: auth_hash["extra"]["raw_info"]["avatar"],
+                        locale: auth_hash["extra"]["raw_info"]["locale"]
 
-        user.authorizations.build :provider => auth_hash["provider"], :uid => auth_hash["uid"]
+        user.authorizations.build provider: auth_hash["provider"], uid: auth_hash["uid"]
         user.save
 
         session[:user_id] = user.id
@@ -49,7 +50,7 @@ class SessionsController < ApplicationController
 
         flash[:notice] = "Welcome #{user.name}! You've signed up."
       end
-    rescue
+    rescue StandardError
       flash[:warning] = "There was an error while trying to authenticate you..."
     end
     redirect_to root_path

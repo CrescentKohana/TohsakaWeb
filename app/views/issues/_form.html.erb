@@ -20,7 +20,7 @@
               collection: %w[feature bug] %>
   <%= f.input :server_id,
               :label => "Server",
-              collection: choosable_servers(get_discord_id),
+              collection: choosable_servers(discord_id),
               :label_method => :second,
               :value_method => :first %>
 

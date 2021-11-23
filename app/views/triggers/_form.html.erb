@@ -22,7 +22,7 @@
   <%= f.input :chance, as: :integer, input_html: { min: '0', max: '100' }, disabled: !permissions?(100) %>
   <%= f.input :server_id,
               :label => "Server",
-              collection: choosable_servers(get_discord_id),
+              collection: choosable_servers(discord_id),
               :label_method => :second,
               :value_method => :first %>
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -15,13 +17,11 @@ module TohsakaWeb
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
-    config.force_ssl = true
-
     config.autoload_paths << Rails.root.join('lib')
 
     path = File.join(Rails.root, "config", "user_config.yml")
-    if File.exists?(path)
-      cfg = YAML::load_file(File.join(path))
+    if File.exist?(path)
+      cfg = YAML.load_file(File.join(path))
       config.hosts << cfg['web_host']
       config.tohsaka_bot_root = cfg['tohsaka_bot_root']
       config.owner_id = cfg['owner_id'].to_i

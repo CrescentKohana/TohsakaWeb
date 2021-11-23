@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Reminder < ApplicationRecord
   belongs_to :user
 
@@ -5,24 +7,22 @@ class Reminder < ApplicationRecord
 
   validates :datetime, presence: true
   validates :channel_id, presence: true, numericality: { only_integer: true }
-  validates :repeat, allow_nil: true, numericality: { only_integer: true, accept: {greater_than: 600, equal_to: 0} }
+  validates :repeat, allow_nil: true, numericality: { only_integer: true, accept: { greater_than: 600, equal_to: 0 } }
 
   validate :repeat_interval_as_seconds
 
   private
 
   def repeat_interval_as_seconds
-    minutes = self.repeat_min.to_i
-    hours = self.repeat_hour.to_i
-    days = self.repeat_day.to_i
+    minutes = repeat_min.to_i
+    hours = repeat_hour.to_i
+    days = repeat_day.to_i
 
-    if minutes < 0 || hours < 0 || days < 0
+    if minutes.negative? || hours.negative? || days.negative?
       errors.add(:base, "Negative values aren't allowed.")
     else
       seconds = (minutes * 60) + (hours * 60 * 60) + (days * 24 * 60 * 60)
-      unless seconds == 0
-        errors.add(:base, "Interval has to be 12 hours or more.") if seconds < 43200
-      end
+      errors.add(:base, "Interval has to be 12 hours or more.") if !seconds.zero? && (seconds < 43_200)
     end
   end
 end
