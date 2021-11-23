@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class HighlightsController < ApplicationController
   before_action :tohsakabot_online
 
   def index
     return unless redirect_if_anonymous
 
-    servers = channel_based_server_access(:highlight_channel)
+    servers = servers_with_access_to(:highlight_channel)
     @highlights = Highlight.where(server_id: servers)
 
     respond_to do |format|
@@ -17,12 +19,7 @@ class HighlightsController < ApplicationController
     return unless redirect_if_anonymous
 
     @highlight = Highlight.find(params[:id])
-
-    server = tohsaka_bridge.get_server_config(@highlight[:server_id])
-    unless channel_permission?(@highlight[:server_id], server[:highlight_channel])
-      redirect_to root_path
-      return
-    end
+    return unless redirect_if_no_discord_perms(@highlight[:server_id], :highlight_channel)
 
     respond_to do |format|
       format.html
@@ -37,20 +34,20 @@ class HighlightsController < ApplicationController
   end
 
   def attachment_preview(attachment)
-    if %w[.jpg .png .jpeg .JPG .PNG .JPEG .gif].include?(File.extname(attachment))
-      html = %{<img src="#{attachment}" alt="image attachment" width=400>}
-    elsif %w[.mp4 .webm .mov].include?(File.extname(attachment))
-      html = '<video controls width="400">'\
-             "<source src=\"#{attachment}\" type=\"video/#{File.extname(attachment)[1..]}\">"\
-             'Sorry, your browser does not support embedded videos.'\
-             '</video>'
-    elsif  %w[.wav .flac .ogg .mp3].include?(File.extname(attachment))
-      html = "<audio controls src=\"#{attachment}\">"\
-             'Your browser does not support the audio element.'\
-             '</audio>'
-    else
-      html = "<p>Attachment cannot be previewed.</p>"
-    end
+    html = if %w[.jpg .png .jpeg .JPG .PNG .JPEG .gif].include?(File.extname(attachment))
+             %(<img src="#{attachment}" alt="image attachment" width=400>)
+           elsif %w[.mp4 .webm .mov].include?(File.extname(attachment))
+             '<video controls width="400">'\
+                    "<source src=\"#{attachment}\" type=\"video/#{File.extname(attachment)[1..]}\">"\
+                    'Sorry, your browser does not support embedded videos.'\
+                    '</video>'
+           elsif %w[.wav .flac .ogg .mp3].include?(File.extname(attachment))
+             "<audio controls src=\"#{attachment}\">"\
+                    'Your browser does not support the audio element.'\
+                    '</audio>'
+           else
+             "<p>Attachment cannot be previewed.</p>"
+           end
 
     html.html_safe
   end

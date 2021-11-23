@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   def update
     return unless redirect_if_anonymous
@@ -5,16 +7,16 @@ class UsersController < ApplicationController
     @user = User.find(session[:user_id])
     @user[:locale] = user_params[:locale]
 
-    if @user.update(user_params)
-      flash[:notice] = "Settings updated!"
-      redirect_to root_path
-    else
-      flash[:notice] = "Error on trying to update settings."
-      redirect_to root_path
-    end
+    flash[:notice] = if @user.update(user_params)
+                       "Settings updated!"
+                     else
+                       "Error on trying to update settings."
+                     end
+    redirect_to root_path
   end
 
   private
+
   def user_params
     params.require(:user).permit(:locale)
   end
