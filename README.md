@@ -15,9 +15,9 @@ A Ruby on Rails web application which is designed to work with [TohsakaBot](http
 - **Production**
   - Setup NGINX. Example config with SSL for TohsakaWeb [here](documentation/tohsakaweb_nginx.conf).
   - Precompile assets with `rails assets:precompile`
-  - Start the app `bundle exec puma -b unix://tmp/sockets/server.sock`
+  - Start the app `bundle exec puma -b unix://tmp/server.sock`
 - **Development**
-  - Start the app `bundle exec puma -b tcp://localhost`
+  - Start the app `RAILS_ENV=development bundle exec puma -b unix://tmp/server.sock`
 
 ## Dependencies
 * Web server (NGINX recommended)
