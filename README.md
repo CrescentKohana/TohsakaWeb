@@ -11,7 +11,7 @@ A Ruby on Rails web application which is designed to work with [TohsakaBot](http
    ```
    EDITOR="nano" rails credentials:edit
    ```
-   
+- Setup database: `rails db:migrate`
 - **Production**
   - Setup NGINX. Example config with SSL for TohsakaWeb [here](documentation/tohsakaweb_nginx.conf).
   - Precompile assets with `rails assets:precompile`
@@ -22,5 +22,6 @@ A Ruby on Rails web application which is designed to work with [TohsakaBot](http
 ## Dependencies
 * Web server (NGINX recommended)
 * Ruby >= 3.0 supported
-* Node.js (tested 14.5.0+) for Rails
+* MariaDB, PostgreSQL or SQLite
+* Node.js (14.5.0+)
 * libmysqlclient-dev
