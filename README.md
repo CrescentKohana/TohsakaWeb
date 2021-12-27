@@ -1,3 +1,5 @@
+# Now found in the [main repository, TohsakaBot](https://github.com/Luukuton/TohsakaBot)
+
 # TohsakaWeb
 A Ruby on Rails web application which is designed to work with [TohsakaBot](https://github.com/Luukuton/TohsakaBot). The name comes from one of the main heroines of Fate/stay night, Tohsaka Rin.
 
